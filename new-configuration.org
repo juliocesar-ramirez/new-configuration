@@ -1,0 +1,87 @@
+
+** main
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-mode
+    :ensure t
+    :commands (lsp lsp-deferred)
+    :hook
+    (go-mode . lsp-deferred)
+    (python-mode . lsp-deferred)
+    (c-mode . lsp-deferred)
+    (c++-mode . lsp-deferred)
+    (java-mode . lsp-deferred)
+    (web-mode . lsp-deferred)
+    (f90-mode . lsp-deferred)
+    (sh-mode . lsp-deferred)
+    (LaTex-mode . lsp-deferred)
+    (js2-mode . lsp-deferred)
+    (css-mode . lsp-deferred)
+    (fortran-mode . lsp-deferred)
+    :init
+    (setq lsp-keymap-prefix "C-c l")  ;; Or 'C-l', 's-l'
+    :config
+    (lsp-enable-which-key-integration t)
+    :custom
+    (lsp-pylsp-server-command "/home/julio/.local/bin/pylsp")
+    )
+
+  (use-package lsp-ui
+  :ensure t
+    :hook (lsp-mode . lsp-ui-mode)
+    :custom
+    (lsp-ui-doc-position 'bottom))
+
+  (use-package lsp-treemacs
+  :ensure t
+    :after lsp)
+
+  (use-package lsp-ivy
+  :ensure t
+  )
+
+#+END_SRC
+
+#+RESULTS:
+
+** python
+#+begin_src emacs-lisp
+  (use-package python-mode
+    :ensure t
+    :hook
+    (python-mode . lsp-deferred)
+    (python-mode . visual-line-mode)
+    :custom
+    ;; NOTE: Set these if Python 3 is called "python3" on your system!
+    (python-shell-interpreter "python")
+    (dap-python-executable "python3")
+    (dap-python-debugger 'debugpy)
+    :config
+    (require 'dap-python))
+  ;;  (setenv "PYTHONPATH" "lib")
+
+  ;;  (setq python-python-command "/usr/bin/python")
+  ;; (setenv "HOMETEL"
+  ;; 	  (concat
+  ;; 	   "/home/julio/telemac-mascaret/v8p2"
+  ;; 	   (getenv "HOMETEL")
+  ;; 	   )
+  ;; 	  )
+  ;; (setenv "PYTHONPATH"
+  ;; 	  (concat
+  ;; 	   "${HOMETEL}/builds/${USETELCFG}/wrap_api/lib:$PYTHONPATH"
+  ;; 	   (getenv "PYTHONPATH")
+  ;; 	   )
+  ;; 	  )
+
+#+end_src
+
+
+
+** pyright
+#+begin_src emacs-lisp
+  (use-package lsp-pyright
+    :straight t
+    :hook (python-mode . (lambda ()
+			   (require 'lsp-pyright)
+			   (lsp))))
+#+end_src
